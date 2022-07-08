@@ -24,7 +24,7 @@ namespace ConsoleUI
 
             }
 
-            foreach (var car in carManager.GetCarsByColorId(5))
+            foreach (var car in carManager.GetCarsByColorId(3))
             {
                 Console.WriteLine(car.Id);
             }
