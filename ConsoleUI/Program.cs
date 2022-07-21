@@ -19,51 +19,61 @@ namespace ConsoleUI
 
         }
 
-        private static void CarTest()
-        {
-            CarManager carManager = new CarManager(new EfCarDal());
+        //private static void CarTest()
+        //{
+        //    CarManager carManager = new CarManager(new EfCarDal());
 
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine(car.Description + " " + car.DailyPrice + " " + car.ColorId + " " + car.BrandId);
-            }
-            foreach (var car in carManager.GetAllByColorId(1))
-            {
-                Console.WriteLine(car.Description);
-            }
-            foreach (var car in carManager.GetAllByBrandId(1))
-            {
-                Console.WriteLine(car.Id);
-            }
-        }
+        //    foreach (var car in carManager.GetAll())
+        //    {
+        //        Console.WriteLine(car.Description + " " + car.DailyPrice + " " + car.ColorId + " " + car.BrandId);
+        //    }
+        //    foreach (var car in carManager.GetAllByColorId(1))
+        //    {
+        //        Console.WriteLine(car.Description);
+        //    }
+        //    foreach (var car in carManager.GetAllByBrandId(1))
+        //    {
+        //        Console.WriteLine(car.Id);
+        //    }
+        //}
 
         private static void GetCarDetailsTest()
         {
 
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetCarDetails())
+            var result = carManager.GetCarDetails();
+            if (result.Success == true)
             {
-                Console.WriteLine(car.CarName + " " + car.ColorName + " " + car.BrandName + " " + car.DailyPrice);
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.CarName + " " + car.ColorName + " " + car.BrandName + " " + car.DailyPrice);
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+            
+            
         }
 
-        private static void ColorTest()
-        {
-            ColorManager colorManager = new ColorManager(new EfColorDal());
-            foreach (var color in colorManager.GetAll())
-            {
-                Console.WriteLine(color.ColorName + " " + color.ColorId);
-            }
-        }
+        //private static void ColorTest()
+        //{
+        //    ColorManager colorManager = new ColorManager(new EfColorDal());
+        //    foreach (var color in colorManager.GetAll())
+        //    {
+        //        Console.WriteLine(color.ColorName + " " + color.ColorId);
+        //    }
+        //}
 
-        private static void BrandTest()
-        {
-            BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var brand in brandManager.GetAll())
-            {
-                Console.WriteLine(brand.BrandName);
-            }
-        }
+        //private static void BrandTest()
+        //{
+        //    BrandManager brandManager = new BrandManager(new EfBrandDal());
+        //    foreach (var brand in brandManager.GetAll())
+        //    {
+        //        Console.WriteLine(brand.BrandName);
+        //    }
+        //}
 
     }
 
