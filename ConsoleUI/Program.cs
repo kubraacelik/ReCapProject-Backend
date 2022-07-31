@@ -1,15 +1,16 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Entities.Concrete;
 using System;
 
 namespace ConsoleUI
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            GetCarDetailsTest();
+            //GetCarDetailsTest();
 
             //ColorTest();
 
@@ -17,25 +18,63 @@ namespace ConsoleUI
 
             //CarTest();
 
+            //RentalTest();
+
+            //CustomerTest();
+
+            //UserTest();
         }
 
-        //private static void CarTest()
-        //{
-        //    CarManager carManager = new CarManager(new EfCarDal());
+        private static void UserTest()
+        {
+            UserManager userManager = new UserManager(new EfUserDal());
 
-        //    foreach (var car in carManager.GetAll())
-        //    {
-        //        Console.WriteLine(car.Description + " " + car.DailyPrice + " " + car.ColorId + " " + car.BrandId);
-        //    }
-        //    foreach (var car in carManager.GetAllByColorId(1))
-        //    {
-        //        Console.WriteLine(car.Description);
-        //    }
-        //    foreach (var car in carManager.GetAllByBrandId(1))
-        //    {
-        //        Console.WriteLine(car.Id);
-        //    }
+            User user = new User { Id = 9, FirstName = "Aysun", LastName = "Karaca", Email = "aysunk", Password = "aysun" };
+            userManager.Add(user);
+            Console.WriteLine(user.Email);
+
+        }
+
+        //private static void CustomerTest()
+        //{
+        //    CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+
+        //    Customer customer1 = new Customer { UserId = 7, CompanyName = "Hyundai", Id = new Guid("77777777-7777-7777-7777-777777777777") };
+        //    customerManager.Add(customer1);
+        //    Console.WriteLine(customer1);
+
         //}
+
+        private static void RentalTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            Rental rental = new Rental { Id = 7, CarId = 8, CustomerId = 9, RentDate = new DateTime(2022, 12, 5), ReturnDate = new DateTime(2022, 12, 8) };
+            rentalManager.Add(rental);
+            Console.WriteLine(rental.RentDate);
+            
+        }
+
+        private static void CarTest()
+        {
+            CarManager carManager = new CarManager(new EfCarDal());
+
+            Car car1 = new Car { BrandId = 2, ColorId = 6, Id = 8, DailyPrice = 36, Description = "Benzin", ModelYear = "2011" };
+            carManager.Add(car1);
+
+            var result = carManager.GetAll();
+
+            if (result.Success == true) 
+            {
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine(car.Description);
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+        }
 
         private static void GetCarDetailsTest()
         {
@@ -57,23 +96,35 @@ namespace ConsoleUI
             
         }
 
-        //private static void ColorTest()
-        //{
-        //    ColorManager colorManager = new ColorManager(new EfColorDal());
-        //    foreach (var color in colorManager.GetAll())
-        //    {
-        //        Console.WriteLine(color.ColorName + " " + color.ColorId);
-        //    }
-        //}
+        private static void ColorTest()
+        {
+            ColorManager colorManager = new ColorManager(new EfColorDal());
 
-        //private static void BrandTest()
-        //{
-        //    BrandManager brandManager = new BrandManager(new EfBrandDal());
-        //    foreach (var brand in brandManager.GetAll())
-        //    {
-        //        Console.WriteLine(brand.BrandName);
-        //    }
-        //}
+            Color color1 = new Color { ColorId = 5, ColorName = "Purple" };
+
+            var result = colorManager.GetAll();
+
+            foreach (var color in result.Data)
+            {
+                Console.WriteLine(color.ColorName + " " + color.ColorId);
+            }
+        }
+
+        private static void BrandTest()
+        {
+            BrandManager brandManager = new BrandManager(new EfBrandDal());
+
+            Brand brand1 = new Brand { BrandId = 13, BrandName = "BMW" };
+            brandManager.Add(brand1);
+
+            var result = brandManager.GetAll();
+
+            foreach (var brand in result.Data)
+            {
+                Console.WriteLine(brand.BrandName);
+            }
+            
+        }
 
     }
 
