@@ -8,6 +8,9 @@ using System.Linq;
 using Entities.DTOs;
 using Core.Utilities.Results;
 using Business.Constants;
+using FluentValidation;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 
 namespace Business.Concrete
 {
@@ -22,10 +25,8 @@ namespace Business.Concrete
 
         public IResult Add(Car car)
         {
-            if (car.DailyPrice > 0 && car.Description.Length > 2)
-            {
-                return new SuccessResult(Messages.CarAdded);
-            }
+            ValidationTool.Validate(new CarValidator(), car);
+
             _carDal.Add(car);
             return new ErrorResult(Messages.CarNameInvalid);
             
@@ -68,4 +69,3 @@ namespace Business.Concrete
         }
     }
 }
-

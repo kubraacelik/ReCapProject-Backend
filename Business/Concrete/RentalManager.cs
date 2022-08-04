@@ -1,8 +1,11 @@
 using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -19,18 +22,11 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
-            var result = _rentalDal.Get(r => r.CarId == rental.CarId);
+            ValidationTool.Validate(new RentalValidator(), rental);
 
-            if (result == null) 
-            {
-                _rentalDal.Add(rental);
-                return new SuccessResult(Messages.RentalAdded);
-            }
-            else
-            {
-                return new ErrorResult(Messages.RentalError);
-            }
-            
+            _rentalDal.Add(rental);
+            return new SuccessResult(Messages.RentalAdded);
+
         }
 
         public IResult Delete(Rental rental)
