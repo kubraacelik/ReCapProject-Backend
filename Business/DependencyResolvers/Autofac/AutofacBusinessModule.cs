@@ -18,7 +18,7 @@ namespace Business.DependencyResolvers.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CarManager>().As<ICarService>().SingleInstance(); //ICarService isterse CarManager ver
+            builder.RegisterType<CarManager>().As<ICarService>().SingleInstance();//ICarService isterse CarManager ver
             builder.RegisterType<EfCarDal>().As<ICarDal>().SingleInstance();
 
             builder.RegisterType<BrandManager>().As<IBrandService>().SingleInstance();
@@ -39,7 +39,8 @@ namespace Business.DependencyResolvers.Autofac
             builder.RegisterType<CarImageManager>().As<ICarImageService>().SingleInstance();
             builder.RegisterType<EfCarImageDal>().As<ICarImageDal>().SingleInstance();
 
-            builder.RegisterType<FileHelpManager>().As<IFileHelper>().SingleInstance();
+            builder.RegisterType<FileHelperManager>().As<IFileHelper>().SingleInstance();
+
 
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
@@ -48,6 +49,8 @@ namespace Business.DependencyResolvers.Autofac
                 {
                     Selector = new AspectInterceptorSelector()
                 }).SingleInstance();
+
+
         }
     }
 }

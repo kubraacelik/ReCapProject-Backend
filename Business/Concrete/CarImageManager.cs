@@ -17,15 +17,13 @@ namespace Business.Concrete
 {
     public class CarImageManager : ICarImageService
     {
-        private ICarImageDal _carImageDal;
-        private IFileHelper _fileHelper;
-
+        ICarImageDal _carImageDal;
+        IFileHelper _fileHelper;
         public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper)
         {
             _carImageDal = carImageDal;
             _fileHelper = fileHelper;
         }
-
         public IResult Add(IFormFile file, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfImageLimitExceeded(carImage.CarId));
@@ -80,7 +78,7 @@ namespace Business.Concrete
         private IDataResult<List<CarImage>> GetDefaultImage(int carId)
         {
             List<CarImage> defaultImage = new List<CarImage>();
-            defaultImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "wwwroot\\DefaultImage.jpg" });
+            defaultImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "default.png" });
             return new SuccessDataResult<List<CarImage>>(defaultImage);
         }
 

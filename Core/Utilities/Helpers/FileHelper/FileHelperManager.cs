@@ -9,25 +9,25 @@ using Microsoft.AspNetCore.Http;
 
 namespace Core.Utilities.Helpers
 {
-    public class FileHelpManager : IFileHelper
+    public class FileHelperManager : IFileHelper
     {
-        public string Upload(IFormFile file, string root)
+        public string Upload(IFormFile file, string root)//verdiğin dosya istenilen yere yükleniyor.
         {
-            if (file.Length > 0)
+            if (file.Length > 0)//Dosya boyutu 0 dan büyük olmalı ki resim olsun
             {
-                if (!Directory.Exists(root))
+                if (!Directory.Exists(root))//yüklenilecek yer var mı yoksa yarat diyor
                 {
                     Directory.CreateDirectory(root);
                 }
 
-                string extension = Path.GetExtension(file.FileName);
-                string guid = Guid.NewGuid().ToString();
-                string filePath = guid + extension;
+                string extension = Path.GetExtension(file.FileName);//dosyanın uzantısını alıyor
+                string guid = Guid.NewGuid().ToString();//dosyanın ismini rastgele isim yapıyor
+                string filePath = guid + extension;//resmin bütününü  oluşturuyor
 
                 using (FileStream fileStream = File.Create(root + filePath))
                 {
                     file.CopyTo(fileStream);
-                    fileStream.Flush();
+                    fileStream.Flush();//belleğe kaydediyor
                     return filePath;
                 }
             }
@@ -37,7 +37,7 @@ namespace Core.Utilities.Helpers
 
         public void Delete(string filePath)
         {
-            if (File.Exists(filePath))
+            if (File.Exists(filePath))//verilen dosya yolu varsa siler
             {
                 File.Delete(filePath);
             }
@@ -45,10 +45,7 @@ namespace Core.Utilities.Helpers
 
         public string Update(IFormFile file, string filePath, string root)
         {
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
+            Delete(filePath);   //dosya yolunu siler yenisini yükler
 
             return Upload(file, root);
         }
