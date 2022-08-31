@@ -24,6 +24,9 @@ namespace ConsoleUI
             //CustomerTest();
 
             //UserTest();
+
+            //GetCustomerDetailsTest();
+
         }
 
         private static void UserTest()
@@ -95,6 +98,23 @@ namespace ConsoleUI
             }
             
             
+        }
+        private static void GetCustomerDetailsTest()
+        {
+
+            CustomerManager customerManager = new CustomerManager(new EfCustomerDal());
+            var result = customerManager.GetCustomerDetails();
+            if (result.Success == true)
+            {
+                foreach (var customer in result.Data)
+                {
+                    Console.WriteLine(customer.FirstName + " " + customer.LastName + " " + customer.CompanyName + " ");
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void ColorTest()
