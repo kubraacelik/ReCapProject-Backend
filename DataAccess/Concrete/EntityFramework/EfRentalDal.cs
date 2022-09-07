@@ -21,13 +21,15 @@ namespace DataAccess.Concrete.EntityFramework
                              join cu in context.Customers on r.CustomerId equals cu.Id
                              join u in context.Users on cu.Id equals u.Id
                              join b in context.Brands on c.BrandId equals b.BrandId
+
                              select new RentalDetailDto
                              {
+                                 RentalId = r.Id,
                                  BrandName = b.BrandName,
                                  FirstName = u.FirstName,
                                  LastName = u.LastName,
-                                 RentDate = r.RentDate,
-                                 ReturnDate = r.ReturnDate
+                                 DailyPrice = c.DailyPrice,
+                                 ModelName = c.ModelName
                              };
                 return result.ToList();
             }
