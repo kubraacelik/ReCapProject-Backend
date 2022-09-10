@@ -10,4 +10,3 @@ namespace DataAccess.Abstract
     {
     }
 }
-
