@@ -13,4 +13,3 @@ namespace Core.Utilities.Security.JWT
                                                                                   //kullanıcın claim'lerini bulacak JWT üretecek ve doğrulayacak
     }
 }
-

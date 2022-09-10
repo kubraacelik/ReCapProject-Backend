@@ -33,7 +33,6 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
-
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
 
@@ -67,14 +66,13 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarsListed);
         }
 
-        [CacheAspect]
-        [PerformanceAspect(5)]
+        
         public IDataResult<List<Car>> GetAllByBrandId(int brandId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));
         }
 
-        [CacheAspect]
+      
         public IDataResult<List<Car>> GetAllByColorId(int colorId)
         {
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == colorId));

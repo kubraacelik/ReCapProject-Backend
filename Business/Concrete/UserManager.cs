@@ -1,41 +1,41 @@
-using Business.Abstract;
-using Business.Constants;
-using Business.ValidationRules.FluentValidation;
-using Core.Aspects.Autofac.Validation;
-using Core.CrossCuttingConcerns.Validation;
-using Core.Entities.Concrete;
-using Core.Utilities.Results;
-using DataAccess.Abstract;
-using Entities.Concrete;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
-using System.Text;
+    using Business.Abstract;
+    using Business.Constants;
+    using Business.ValidationRules.FluentValidation;
+    using Core.Aspects.Autofac.Validation;
+    using Core.CrossCuttingConcerns.Validation;
+    using Core.Entities.Concrete;
+    using Core.Utilities.Results;
+    using DataAccess.Abstract;
+    using Entities.Concrete;
+    using FluentValidation;
+    using System;
+    using System.Collections.Generic;
+    using System.Text;
 
-namespace Business.Concrete
-{
-    public class UserManager : IUserService
+    namespace Business.Concrete
     {
-        IUserDal _userDal;
-
-        public UserManager(IUserDal userDal)
+        public class UserManager : IUserService
         {
-            _userDal = userDal;
-        }
+            IUserDal _userDal;
 
-        public List<OperationClaim> GetClaims(User user)
-        {
-            return _userDal.GetClaims(user);
-        }
+            public UserManager(IUserDal userDal)
+            {
+                _userDal = userDal;
+            }
 
-        public void Add(User user)
-        {
-            _userDal.Add(user);
-        }
+            public List<OperationClaim> GetClaims(User user)
+            {
+                return _userDal.GetClaims(user);
+            }
 
-        public User GetByMail(string email)
-        {
-            return _userDal.Get(u => u.Email == email);
+            public void Add(User user)
+            {
+                _userDal.Add(user);
+            }
+
+            public User GetByMail(string email)
+            {
+                return _userDal.Get(u => u.Email == email);
+            }
         }
     }
-}
