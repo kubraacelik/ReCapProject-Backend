@@ -14,7 +14,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, RecapContext>, ICarDal
     {
-        public List<CarDetailDto> GetCarDetails()
+        public List<CarDetailDto> GetCarDetails(Expression<Func<CarDetailDto, bool>> filter = null)
         {
             using (RecapContext context = new RecapContext())
             {
@@ -30,7 +30,9 @@ namespace DataAccess.Concrete.EntityFramework
                              {
                                  CarId = c.Id,
                                  ModelName = c.ModelName,
+                                 BrandId = c.BrandId,
                                  BrandName = b.BrandName,
+                                 ColorId = c.ColorId,
                                  ColorName = co.ColorName,
                                  DailyPrice = c.DailyPrice,
                                  ModelYear = c.ModelYear,
@@ -40,7 +42,7 @@ namespace DataAccess.Concrete.EntityFramework
                                               select img.ImagePath).FirstOrDefault()
                              };
 
-                return result.ToList();
+                return filter != null ? result.Where(filter).ToList() : result.ToList();
             }
         }
     }
