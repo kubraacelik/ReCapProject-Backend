@@ -42,7 +42,7 @@ namespace Business.Concrete
         public IResult AddTransactionalTest(Car car)
         {
             Add(car);
-            if (car.DailyPrice<10)
+            if (car.DailyPrice < 10)
             {
                 throw new Exception("");
             }
@@ -59,26 +59,22 @@ namespace Business.Concrete
         [CacheAspect]
         public IDataResult<List<Car>> GetAll()
         {
-            if (DateTime.Now.Hour==23)
-            {
-                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
-            }
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(),Messages.CarsListed);
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.CarsListed);
         }
 
-        
-        public IDataResult<List<Car>> GetAllByBrandId(int brandId)
+
+        public IDataResult<List<CarDetailDto>> GetAllByBrandId(int brandId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.BrandId == brandId));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(p => p.BrandId == brandId));
         }
 
-      
-        public IDataResult<List<Car>> GetAllByColorId(int colorId)
+
+        public IDataResult<List<CarDetailDto>> GetAllByColorId(int colorId)
         {
-            return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == colorId));
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails(p => p.ColorId == colorId));
         }
 
-        [CacheAspect]
+
         public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
